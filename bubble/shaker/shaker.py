@@ -4,10 +4,10 @@ import random as rn
 import time
 from utils.formatting.textcolors import *
 
-'''This algorithm is a bubble sort program, with a textual-graphical
+'''This algorithm is a shaker sort program, with a textual-graphical
 rapresentation of sorting the array.
 The array that will be sorted is a vector<int> of variable length,
-made of random numbers of the range 0-100. Default length is 20.
+made of random numbers of the range 0-100.
 If you are searching for an explanation of bubble sort check
 the README.md in this folder.
 
@@ -46,18 +46,26 @@ class Main:
 
     def bubble(self, arr: list):
         # Initialized needed vars
-        index = len(arr) - 1
         swapped = True
 
         # Main while loop
         while swapped:
             swapped = False
-            # Main for loop
-            for i in range(index):
+            # Left-to-right for loop
+            for i in range(len(arr)-1):
                 # Main if statement
                 if arr[i] > arr[i+1]:
                     arr[i], arr[i+1] = arr[i+1], arr[i]
-                    index = i
+                    swapped = True
+
+            if not swapped:
+                break
+
+            swapped = False
+            # Right-to-left for loop
+            for i in range(len(arr)-2, -1, -1):
+                if arr[i] > arr[i+1]:
+                    arr[i], arr[i+1] = arr[i+1], arr[i]
                     swapped = True
 
         # Calculating time of execution
@@ -68,7 +76,6 @@ class Main:
 
         # Initializing needed vars
         iterations = n_swapped = 0
-        index = len(arr.array)-1
         swapped = True
 
         # Main loop
@@ -76,8 +83,8 @@ class Main:
             iterations += 1
             swapped = False
             
-            # Main for loop
-            for i in range(index):
+            # Left-to-right for loop
+            for i in range(len(arr.array)-1):
                 
                 # Main if statement
                 if int(arr.array[i].text) > int(arr.array[i+1].text):
@@ -93,12 +100,41 @@ class Main:
                         os.system('clear')
                     
                     # Updating vars
-                    index = i
                     n_swapped += 1
                     swapped = True
 
                 # Reset all elements' style
                 arr.coloring_indexes(range(len(arr.array)), 'white', 'black')
+
+            if not swapped:
+                break
+
+            iterations += 1
+            swapped = False
+
+            # Right-to-left for loop
+            for i in range(len(arr.array)-2, -1, -1):
+                
+                # Main if statement
+                if int(arr.array[i].text) > int(arr.array[i+1].text):
+
+                    # Coloring elements to be swapped -> swapping elements
+                    arr.coloring_indexes([i, i+1], 'black', 'red')
+                    arr.array[i], arr.array[i+1] = arr.array[i+1], arr.array[i]
+                    
+                    # Graphical commands
+                    arr.print_elements()
+                    time.sleep(.5)
+                    if self.clear:
+                        os.system('clear')
+                    
+                    # Updating vars
+                    n_swapped += 1
+                    swapped = True
+
+                # Reset all elements' style
+                arr.coloring_indexes(range(len(arr.array)), 'white', 'black')
+                
 
         # Printing all elements, the final array should be sorted
         arr.print_elements()

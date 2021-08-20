@@ -45,6 +45,20 @@ void algorithm(void)
                 swapped = true;
             }
        }
+       
+       if(!swapped)
+           break;
+           
+       swapped = false;
+       for(int i=n-2; i>=0; i--) {
+            if(array[i] > array[i+1]) {
+                int t;
+                t = array[i];
+                array[i] = array[i+1];
+                array[i+1] = t;
+                swapped = true; 
+            }
+       }
     } while(swapped);
     
     for(int i=0; i<n; i++)
